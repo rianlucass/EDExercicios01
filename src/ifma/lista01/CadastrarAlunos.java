@@ -85,7 +85,41 @@ public class CadastrarAlunos {
         return false;
     }
 
+    public String removerComIndice(int indice) {
+        if (isEmpty()){
+            throw new RuntimeException("Vetor Vazio!");
 
+        } else if (verificarIndice(indice)) {
+            if (indice == 0) {
+                String temp = aluno[indice].getNome();
+                removerNoInicio();
+                return "O aluno " + temp + " foi removido";
+
+            } else if (indice == (size - 1)) {
+                String temp = aluno[indice].getNome();
+                removerNoFinal();
+                return "O aluno " + temp + " foi removido";
+
+            } else {
+                for (int i = 0; i < size; i++){
+                    if (aluno[indice] == aluno[i]){
+                        String nomeTemp = aluno[indice].getNome();
+                        aluno[indice] = null;
+                        Aluno temp;
+                        for (int j = indice + 1; j < size; j++){
+                            temp = aluno[j];
+                            aluno[j - 1] = temp;
+                            removerNoFinal();
+                        }
+                        return "O aluno " + nomeTemp + " foi removido! ";
+                    }
+                }
+            }
+        } else {
+            throw new RuntimeException("Indice inexistente!");
+        }
+        return null;
+    }
 
     public void listar() {
         System.out.println("-------");
@@ -95,5 +129,6 @@ public class CadastrarAlunos {
             System.out.println("Cod: " + aluno[i].getCodigo());
             System.out.println("-------");
         }
+        System.out.println("Tamanho da Lista: " + size);
     }
 }
